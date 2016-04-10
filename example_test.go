@@ -15,8 +15,10 @@ type data struct {
 }
 
 func ExampleJsonCache() {
-	// 1. new cache struct and new JsonCache
-	d := &data{}
+	// data with default value
+	d := &data{Name: "foobar"}
+
+	// 1. new JsonCache
 	cache, err := cache.NewJsonCache(dir, "data.json")
 	if err != nil {
 		log.Fatal(err)
@@ -28,11 +30,11 @@ func ExampleJsonCache() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(d.Name == "")
+	// use default value
+	fmt.Println(d.Name == "foobar")
 
 	// 3. cache data to file
 	// it will generate a new file
-	d.Name = "foobar"
 	err = cache.Write(d)
 	if err != nil {
 		log.Fatal(err)
@@ -43,7 +45,7 @@ func ExampleJsonCache() {
 	cache.Read(d)
 	fmt.Println(d.Name == "foobar")
 
-	// this test has generated a file, remove test file "./testdata/data.json" after 10 second
+	// this test will generate a file in 'testdata' dir, and it will be removed after 10 second
 	time.Sleep(10 * time.Second)
 	os.Remove(filepath.Join(dir, "data.json"))
 

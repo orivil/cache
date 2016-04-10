@@ -6,7 +6,6 @@ import (
 	"path/filepath"
 	"os"
 	"gopkg.in/orivil/helper.v0"
-	"fmt"
 	"gopkg.in/yaml.v2"
 )
 
@@ -17,7 +16,6 @@ type JsonCache struct {
 
 func NewJsonCache(dir string, fileName string) (c *JsonCache, err error) {
 	if !helper.IsExist(dir) {
-		fmt.Println(dir)
 		err = os.MkdirAll(dir, os.ModePerm)
 	}
 	var isYaml bool
