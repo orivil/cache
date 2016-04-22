@@ -4,21 +4,21 @@ import (
 	"sync"
 )
 
-type tire struct {
+type trie struct {
 	data interface{}
-	prev *tire
-	next *tire
+	prev *trie
+	next *trie
 }
 
 type Cache struct {
-	intIndex map[int]*tire
+	intIndex map[int]*trie
 	sync.RWMutex
 	maxID    int
 }
 
 func New() *Cache {
 	return &Cache{
-		intIndex:make(map[int]*tire, 1000),
+		intIndex:make(map[int]*trie, 1000),
 	}
 }
 
@@ -186,13 +186,13 @@ func (this *Cache) Add(id int, ins interface{}) {
 		if this.maxID < id {
 			this.maxID = id
 		}
-		t := &tire{data: ins}
+		t := &trie{data: ins}
 		this.intIndex[id] = t
 		index := 1
 		for !toTop || !toButtom {
 			prevID = id - index
 			nextID = id + index
-			// add the tire to prev
+			// add the trie to prev
 			if prevID > 0 {
 				if prevT, ok := this.intIndex[prevID]; ok {
 					if prevT.next != nil {
@@ -206,7 +206,7 @@ func (this *Cache) Add(id int, ins interface{}) {
 			} else {
 				toTop = true
 			}
-			// add the tire to next
+			// add the trie to next
 			if nextID <= this.maxID {
 				if nextT, ok := this.intIndex[nextID]; ok {
 					if nextT.prev != nil {
