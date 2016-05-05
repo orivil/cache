@@ -1,3 +1,9 @@
+// Copyright 2016 orivil Authors. All rights reserved.
+// Use of this source code is governed by a MIT-style
+// license that can be found in the LICENSE file.
+
+// Package cache provide a solution for read and write data from "yaml" or "json" file,
+// and provide a solution for cache interface{} data
 package cache
 
 import (
@@ -48,7 +54,7 @@ func (this *Cache) Update(id int, ins interface{}) {
 	}
 }
 
-// if has id not exist in cache, it will call 'dataProvider', and cache the result
+// if has not exist id in cache, it will call 'dataProvider', and cache the result
 func (this *Cache) GetIn(ids []int, dataProvider func(id int)interface{}) (datas []interface{}) {
 	this.RLock()
 	datas = make([]interface{}, len(ids))
